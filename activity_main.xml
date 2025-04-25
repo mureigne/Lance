@@ -9,7 +9,6 @@
     android:background="#F7F9FB"
     tools:context=".MainActivity">
 
-    <!-- Dashboard Title -->
     <TextView
         android:id="@+id/titleDash"
         android:layout_width="wrap_content"
@@ -23,7 +22,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"/>
 
-    <!-- Grid for Task Cards -->
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/statusGrid"
         android:layout_width="0dp"
@@ -62,15 +60,17 @@
                     android:textColor="#000"/>
 
                 <TextView
+                    android:id="@+id/textOngoingCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15 Tasks"
+                    android:text="0 Tasks"
                     android:textSize="14sp"
                     android:textColor="#555"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- In Process -->
+        <!-- Repeat for In Process, Completed, Draft with correct IDs -->
+        <!-- In Process CardView -->
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="140dp"
@@ -95,15 +95,16 @@
                     android:textColor="#000"/>
 
                 <TextView
+                    android:id="@+id/textInProcessCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10 Tasks"
+                    android:text="0 Tasks"
                     android:textSize="14sp"
                     android:textColor="#555"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Completed -->
+        <!-- Completed CardView -->
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="140dp"
@@ -128,15 +129,16 @@
                     android:textColor="#000"/>
 
                 <TextView
+                    android:id="@+id/textCompletedCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="7 Tasks"
+                    android:text="0 Tasks"
                     android:textSize="14sp"
                     android:textColor="#555"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Draft -->
+        <!-- Draft CardView -->
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="140dp"
@@ -161,14 +163,43 @@
                     android:textColor="#000"/>
 
                 <TextView
+                    android:id="@+id/textDraftCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3 Tasks"
+                    android:text="0 Tasks"
                     android:textSize="14sp"
                     android:textColor="#555"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
     </androidx.gridlayout.widget.GridLayout>
+
+    <!-- Floating Action Button to Add Projects -->
+
+    <!-- Bottom Navigation Bar -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Add Project"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
