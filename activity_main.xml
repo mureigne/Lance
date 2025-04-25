@@ -1,205 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F9FB"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/titleDash"
+    <EditText
+        android:id="@+id/emailLog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dashboard"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"/>
-
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/statusGrid"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:columnCount="2"
-        app:layout_constraintTop_toBottomOf="@id/titleDash"
-        app:layout_constraintStart_toStartOf="parent"
+        android:ems="10"
+        android:hint="Email <3"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:rowCount="2">
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.358" />
 
-        <!-- Ongoing -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="#DAD6F4"
-            app:layout_columnWeight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ongoing"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:textColor="#000"/>
-
-                <TextView
-                    android:id="@+id/textOngoingCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0 Tasks"
-                    android:textSize="14sp"
-                    android:textColor="#555"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Repeat for In Process, Completed, Draft with correct IDs -->
-        <!-- In Process CardView -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="#FFE0B2"
-            app:layout_columnWeight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="In Process"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:textColor="#000"/>
-
-                <TextView
-                    android:id="@+id/textInProcessCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0 Tasks"
-                    android:textSize="14sp"
-                    android:textColor="#555"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Completed CardView -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="#C8E6C9"
-            app:layout_columnWeight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Completed"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:textColor="#000"/>
-
-                <TextView
-                    android:id="@+id/textCompletedCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0 Tasks"
-                    android:textSize="14sp"
-                    android:textColor="#555"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Draft CardView -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="6dp"
-            app:cardBackgroundColor="#F8BBD0"
-            app:layout_columnWeight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Draft"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:textColor="#000"/>
-
-                <TextView
-                    android:id="@+id/textDraftCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0 Tasks"
-                    android:textSize="14sp"
-                    android:textColor="#555"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-    </androidx.gridlayout.widget.GridLayout>
-
-    <!-- Floating Action Button to Add Projects -->
-
-    <!-- Bottom Navigation Bar -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAdd"
+    <EditText
+        android:id="@+id/PassLog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:contentDescription="Add Project"
-        android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+        android:ems="10"
+        android:hint="Password <3"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailLog"
+        app:layout_constraintVertical_bias="0.093" />
+
+    <Button
+        android:id="@+id/logIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log in"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.6" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/white"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="214dp"
+        android:layout_height="25dp"
+        android:text="-----------------Or sign up------------------"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:layout_constraintHorizontal_bias="0.558"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.686" />
+
+    <Button
+        android:id="@+id/signUpLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign up <3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.783" />
+
+    <ImageView
+        android:id="@+id/logoLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.104"
+        app:srcCompat="@drawable/ic_launcher_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
