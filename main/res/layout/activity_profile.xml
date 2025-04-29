@@ -97,7 +97,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Bottom Navigation Bar -->
     <LinearLayout
         android:id="@+id/navigationBar"
         android:layout_width="0dp"
@@ -111,18 +110,16 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <!-- Dashboard Icon -->
-
-        <!-- Portfolio Icon -->
         <ImageView
             android:id="@+id/iconDashboard"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_gravity="center"
             android:layout_weight="1"
             android:contentDescription="Dashboard"
             android:src="@drawable/ic_dashboard"
             app:tint="@color/purple_500" />
 
+        <!-- Portfolio Icon -->
         <ImageView
             android:id="@+id/iconPortfolio"
             android:layout_width="0dp"
@@ -130,8 +127,7 @@
             android:layout_weight="1"
             android:src="@drawable/ic_portfolio"
             android:contentDescription="Portfolio"
-            app:tint="@color/purple_500"
-            android:layout_gravity="center" />
+            app:tint="@color/purple_500" />
 
         <!-- Add Icon -->
         <ImageView
@@ -153,8 +149,7 @@
             android:layout_weight="1"
             android:src="@drawable/ic_task"
             android:contentDescription="Tasks"
-            app:tint="@color/purple_500"
-            android:layout_gravity="center" />
+            app:tint="@color/purple_500" />
 
         <!-- Profile Icon -->
         <ImageView
@@ -164,10 +159,10 @@
             android:layout_weight="1"
             android:src="@drawable/ic_profile"
             android:contentDescription="Profile"
-            app:tint="@color/purple_500"
-            android:layout_gravity="center" />
+            app:tint="@color/purple_500" />
 
     </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

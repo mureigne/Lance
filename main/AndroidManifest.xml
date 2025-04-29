@@ -26,6 +26,10 @@
         <!-- ProfileActivity -->
         <activity android:name=".ProfileActivity" />
 
+        <activity android:name=".PortfolioActivity" />
+        <activity android:name=".TasksActivity" />
+
+
     </application>
 
 </manifest>

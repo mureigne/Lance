@@ -24,21 +24,32 @@ public class ProfileActivity extends AppCompatActivity {
         textEmail = findViewById(R.id.textEmail);
         btnSignOut = findViewById(R.id.btnSignOut);
 
+        // Retrieve user data from SharedPreferences
         SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
-        textUsername.setText("Username: " + prefs.getString("username", ""));
-        textName.setText("Name: " + prefs.getString("name", ""));
-        textPhone.setText("Phone: " + prefs.getString("phone", ""));
-        textEmail.setText("Email: " + prefs.getString("email", ""));
+        String username = prefs.getString("username", "");
+        String name = prefs.getString("name", "");
+        String phone = prefs.getString("phone", "");
+        String email = prefs.getString("email", "");
 
+        // Display user data on the profile screen
+        textUsername.setText("Username: " + username);
+        textName.setText("Name: " + name);
+        textPhone.setText("Phone: " + phone);
+        textEmail.setText("Email: " + email);
+
+        // Sign out button functionality
         btnSignOut.setOnClickListener(v -> {
             SharedPreferences.Editor editor = prefs.edit();
-            editor.clear();
+            editor.clear();  // Clear user data when signing out
             editor.apply();
             startActivity(new Intent(ProfileActivity.this, SignUpActivity.class));
             finish();
         });
 
+        // Icon functionality for navigation
         ImageView iconDashboard = findViewById(R.id.iconDashboard);
+        ImageView iconPortfolio = findViewById(R.id.iconPortfolio);
+        ImageView iconTask = findViewById(R.id.iconTask);
         ImageView iconProfile = findViewById(R.id.iconProfile);
 
         iconDashboard.setOnClickListener(v -> {
@@ -46,8 +57,19 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
         });
 
+        iconPortfolio.setOnClickListener(v -> {
+            startActivity(new Intent(ProfileActivity.this, PortfolioActivity.class));
+            finish();
+        });
+
+        iconTask.setOnClickListener(v -> {
+            startActivity(new Intent(ProfileActivity.this, TasksActivity.class));
+            finish();
+        });
+
+        // Profile icon is already in ProfileActivity, so no action needed.
         iconProfile.setOnClickListener(v -> {
-            // already in profile
+            // Already in Profile Activity
         });
     }
 }
