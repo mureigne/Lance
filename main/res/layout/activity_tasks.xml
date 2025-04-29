@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F4F0FA">
+
+    <TextView
+        android:id="@+id/titleTasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tasks"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#4B0082"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp" />
+
+    <Button
+        android:id="@+id/btnAddNewTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add New Task"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#6A1B9A"
+        app:layout_constraintTop_toBottomOf="@id/titleTasks"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+    <Button
+        android:id="@+id/btnViewTaskList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Task List"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#6A1B9A"
+        app:layout_constraintTop_toBottomOf="@id/btnAddNewTask"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/navigationBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Dashboard Icon -->
+
+        <!-- Portfolio Icon -->
+        <ImageView
+            android:id="@+id/iconDashboard"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:contentDescription="Dashboard"
+            android:src="@drawable/ic_dashboard"
+            app:tint="@color/purple_500" />
+
+        <ImageView
+            android:id="@+id/iconPortfolio"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_portfolio"
+            android:contentDescription="Portfolio"
+            app:tint="@color/purple_500"
+            android:layout_gravity="center" />
+
+        <!-- Add Icon -->
+        <ImageView
+            android:id="@+id/iconAdd"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_add"
+            android:contentDescription="Add"
+            android:layout_marginHorizontal="16dp"
+            android:layout_gravity="center"
+            android:background="@drawable/square_background" />
+
+        <!-- Task Icon -->
+        <ImageView
+            android:id="@+id/iconTask"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_task"
+            android:contentDescription="Tasks"
+            app:tint="@color/purple_500"
+            android:layout_gravity="center" />
+
+        <!-- Profile Icon -->
+        <ImageView
+            android:id="@+id/iconProfile"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_profile"
+            android:contentDescription="Profile"
+            app:tint="@color/purple_500"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
