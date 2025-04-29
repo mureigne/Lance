@@ -21,13 +21,17 @@ public class MainActivity extends AppCompatActivity {
 
         iconProfile.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            finish();
         });
 
         iconPortfolio.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, PortfolioActivity.class));
+            finish();
         });
+
         iconTask.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, TasksActivity.class));
+            finish();
         });
     }
 }
