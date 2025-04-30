@@ -27,7 +27,7 @@
         <activity android:name=".ProfileActivity" />
 
         <activity android:name=".PortfolioActivity" />
-        <activity android:name=".TasksActivity" />
+        <activity android:name=".ProjectActivity" />
 
 
     </application>

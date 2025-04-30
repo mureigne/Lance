@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <!-- Project Name -->
+    <EditText
+        android:id="@+id/inputProjectName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Project Name"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:textColor="#3F0449"
+        android:textColorHint="#9C27B0"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Due Date -->
+    <EditText
+        android:id="@+id/inputDueDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select Due Date"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:textColor="#3F0449"
+        android:textColorHint="#9C27B0"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"
+        android:focusable="false"
+        android:clickable="true" />
+
+    <!-- Project Description -->
+    <EditText
+        android:id="@+id/inputDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Project Description"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:textColor="#3F0449"
+        android:textColorHint="#9C27B0"
+        android:textSize="16sp"
+        android:minLines="3"
+        android:gravity="top"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Submit Button -->
+
+    <!-- Cancel Button -->
+</LinearLayout>

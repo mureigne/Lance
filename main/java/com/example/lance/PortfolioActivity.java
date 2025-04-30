@@ -27,7 +27,7 @@ public class PortfolioActivity extends AppCompatActivity {
         });
 
         iconTask.setOnClickListener(v -> {
-            startActivity(new Intent(PortfolioActivity.this, TasksActivity.class));
+            startActivity(new Intent(PortfolioActivity.this, ProjectActivity.class));
             finish();
         });
 
