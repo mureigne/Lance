@@ -1,0 +1,78 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:id="@+id/layoutRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Portfolio Title -->
+        <EditText
+            android:id="@+id/editTextTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Portfolio Title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:inputType="text" />
+
+        <!-- User Name -->
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:hint="Your Name" />
+
+        <!-- Contact Info -->
+        <EditText
+            android:id="@+id/editTextContact"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:hint="Email or Contact Info"
+            android:inputType="textEmailAddress" />
+
+        <!-- Summary -->
+        <EditText
+            android:id="@+id/editTextSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Short Summary or Objective"
+            android:minLines="3"
+            android:inputType="textMultiLine" />
+
+        <!-- Work Samples Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Work Samples"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingTop="16dp" />
+
+        <!-- Container for dynamic work sample entries -->
+        <LinearLayout
+            android:id="@+id/layoutWorkSamples"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- Add Work Sample Button -->
+        <Button
+            android:id="@+id/buttonAddSample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Work Sample"
+            android:layout_marginTop="8dp" />
+
+        <!-- Generate PDF Button -->
+        <Button
+            android:id="@+id/buttonGeneratePDF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Generate PDF Portfolio"
+            android:layout_marginTop="24dp" />
+    </LinearLayout>
+</ScrollView>
