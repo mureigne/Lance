@@ -63,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         iconTask.setOnClickListener(v -> {
-            startActivity(new Intent(ProfileActivity.this, TasksActivity.class));
+            startActivity(new Intent(ProfileActivity.this, ProjectActivity.class));
             finish();
         });
 
