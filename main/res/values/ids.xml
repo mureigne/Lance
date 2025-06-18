@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="editTextSampleTitle" type="id" />
+    <item name="editTextSampleDescription" type="id" />
+    <item name="inputProjectName" type="id" />
+    <item name="editTextTitle" type="id" />
+    <item name="editTextName" type="id" />
+    <item name="editTextContact" type="id" />
+    <item name="editTextSummary" type="id" />
+    <item name="layoutWorkSamples" type="id" />
+    <item name="buttonAddSample" type="id" />
+    <item name="buttonGeneratePDF" type="id" />
+    <item name="checkBoxIncludeName" type="id" />
+    <item name="textViewName" type="id" />
+    <item name="checkBoxIncludeEmail" type="id" />
+    <item name="textViewEmail" type="id" />
+    <item name="checkBoxIncludeContact" type="id" />
+    <item name="textViewContact" type="id" />
+    <item name="imageViewTemplatePreview" type="id" />
+    <item name="spinnerTemplates" type="id" />
+    <item name="layoutRoot" type="id" />
+</resources>

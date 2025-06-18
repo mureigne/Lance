@@ -1,7 +1,6 @@
 package com.example.lance;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -15,11 +14,14 @@ public class LoginActivity extends AppCompatActivity {
     EditText editUsername, editPassword;
     Button btnLogin;
     TextView textGoToSignUp;
+    MyDataBaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        dbHelper = new MyDataBaseHelper(this);
 
         editUsername = findViewById(R.id.editLoginUsername);
         editPassword = findViewById(R.id.editLoginPassword);
@@ -27,33 +29,30 @@ public class LoginActivity extends AppCompatActivity {
         textGoToSignUp = findViewById(R.id.textGoToSignUp);
 
         btnLogin.setOnClickListener(v -> {
-            String inputUsername = editUsername.getText().toString().trim();
-            String inputPassword = editPassword.getText().toString().trim();
+            String username = editUsername.getText().toString().trim();
+            String password = editPassword.getText().toString().trim();
 
-            if (TextUtils.isEmpty(inputUsername)) {
+            if (TextUtils.isEmpty(username)) {
                 editUsername.setError("Username is required");
                 return;
             }
-            if (TextUtils.isEmpty(inputPassword)) {
+            if (TextUtils.isEmpty(password)) {
                 editPassword.setError("Password is required");
                 return;
             }
 
-            SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
-            String savedUsername = prefs.getString("username", null);
-            String savedPassword = prefs.getString("password", null);
-
-            if (inputUsername.equals(savedUsername) && inputPassword.equals(savedPassword)) {
-                Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, MainActivity.class));
+            if (dbHelper.validateUser(username, password)) {
+                CurrentUser.setUsername(username);
+                Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+                startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
             }
         });
 
-        textGoToSignUp.setOnClickListener(v ->
-                startActivity(new Intent(LoginActivity.this, SignUpActivity.class))
-        );
+        textGoToSignUp.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+        });
     }
 }

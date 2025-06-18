@@ -3,8 +3,7 @@
     package="com.example.lance">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        android:maxSdkVersion="28"/>
 
     <application
         android:allowBackup="true"
@@ -22,28 +21,19 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- SignUpActivity is the launch activity -->
         <activity android:name=".SignUpActivity"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- LoginActivity -->
         <activity android:name=".LoginActivity" />
-
-        <!-- MainActivity (Dashboard) -->
         <activity android:name=".MainActivity" />
-
-        <!-- ProfileActivity -->
         <activity android:name=".ProfileActivity" />
-
         <activity android:name=".PortfolioActivity" />
-        <activity android:name=".TaskActivity" />
-        <activity android:name=".CreateNewPortfolioActivity" />
+        <activity android:name=".ProjectActivity" />
+        <activity android:name=".CreateNewPortfolioActivity"/>
 
 
     </application>

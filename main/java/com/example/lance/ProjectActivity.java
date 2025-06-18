@@ -57,7 +57,6 @@ public class ProjectActivity extends AppCompatActivity {
     }
 
     private void loadProjectData() {
-        // Load project data from SharedPreferences
         SharedPreferences preferences = getSharedPreferences("ProjectData", MODE_PRIVATE);
         int projectCount = preferences.getInt("projectCount", 0);
 
@@ -75,7 +74,6 @@ public class ProjectActivity extends AppCompatActivity {
     }
 
     private void showAddProjectPopup() {
-        // Inflate the popup layout
         LayoutInflater inflater = LayoutInflater.from(this);
         View popupView = inflater.inflate(R.layout.popup_add_project, null);
 

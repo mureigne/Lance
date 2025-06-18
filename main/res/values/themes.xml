@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.Lance" parent="Base.Theme.Lance" />
+<!--    <item name="android:textColorHint" type="">@android:color/white</item>-->
 </resources>

@@ -10,29 +10,29 @@
     <EditText
         android:id="@+id/inputProjectName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Project Name"
+        android:layout_height="64dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/edittext_background"
+        android:hint="Project Name"
         android:padding="12dp"
         android:textColor="#3F0449"
         android:textColorHint="#9C27B0"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp" />
+        android:textSize="16sp" />
 
     <!-- Due Date -->
     <EditText
         android:id="@+id/inputDueDate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Select Due Date"
+        android:layout_height="59dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/edittext_background"
+        android:clickable="true"
+        android:focusable="false"
+        android:hint="Select Due Date"
         android:padding="12dp"
         android:textColor="#3F0449"
         android:textColorHint="#9C27B0"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp"
-        android:focusable="false"
-        android:clickable="true" />
+        android:textSize="16sp" />
 
     <!-- Project Description -->
     <EditText

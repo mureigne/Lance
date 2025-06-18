@@ -1,7 +1,6 @@
 package com.example.lance;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -17,10 +16,14 @@ public class SignUpActivity extends AppCompatActivity {
     Button btnSignUp;
     TextView textGoToLogin;
 
+    MyDataBaseHelper dbHelper;  // Add this
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        dbHelper = new MyDataBaseHelper(this);
 
         editUsername = findViewById(R.id.editUsername);
         editName = findViewById(R.id.editName);
@@ -58,22 +61,22 @@ public class SignUpActivity extends AppCompatActivity {
                 return;
             }
 
-            SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("username", username);
-            editor.putString("name", name);
-            editor.putString("phone", phone);
-            editor.putString("email", email);
-            editor.putString("password", password); // NOTE: insecure storage for real apps
-            editor.apply();
+            byte[] imageBytes = null;
 
-            Toast.makeText(this, "Account created!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
+            boolean success = dbHelper.insertUser(username, name, phone, email, password, imageBytes);
+            if (success) {
+                CurrentUser.setUsername(username); // 🔐 Store user for app-wide access
+                Toast.makeText(this, "Account created!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SignUpActivity.this, MainActivity.class)); // Or ProfileActivity if preferred
+                finish();
+            } else {
+                Toast.makeText(this, "Error saving user", Toast.LENGTH_SHORT).show();
+            }
         });
 
         textGoToLogin.setOnClickListener(v ->
                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class))
         );
+
     }
 }

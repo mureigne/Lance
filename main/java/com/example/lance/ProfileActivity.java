@@ -1,22 +1,26 @@
 package com.example.lance;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 
     TextView textUsername, textName, textPhone, textEmail;
     Button btnSignOut;
+    MyDataBaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        dbHelper = new MyDataBaseHelper(this);
 
         textUsername = findViewById(R.id.textUsername);
         textName = findViewById(R.id.textName);
@@ -24,52 +28,51 @@ public class ProfileActivity extends AppCompatActivity {
         textEmail = findViewById(R.id.textEmail);
         btnSignOut = findViewById(R.id.btnSignOut);
 
-        // Retrieve user data from SharedPreferences
-        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
-        String username = prefs.getString("username", "");
-        String name = prefs.getString("name", "");
-        String phone = prefs.getString("phone", "");
-        String email = prefs.getString("email", "");
+        // Get current username from in-memory session
+        String currentUsername = CurrentUser.getUsername();
+        if (currentUsername == null) {
+            // No active session — go to login
+            startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+            finish();
+            return;
+        }
 
-        // Display user data on the profile screen
-        textUsername.setText("Username: " + username);
-        textName.setText("Name: " + name);
-        textPhone.setText("Phone: " + phone);
-        textEmail.setText("Email: " + email);
+        // Load user data from SQLite
+        Cursor cursor = dbHelper.getUserByUsername(currentUsername);
+        if (cursor != null && cursor.moveToFirst()) {
+            textUsername.setText("Username: " + cursor.getString(cursor.getColumnIndexOrThrow("username")));
+            textName.setText("Name: " + cursor.getString(cursor.getColumnIndexOrThrow("name")));
+            textPhone.setText("Phone: " + cursor.getString(cursor.getColumnIndexOrThrow("phone")));
+            textEmail.setText("Email: " + cursor.getString(cursor.getColumnIndexOrThrow("email")));
+        } else {
+            Toast.makeText(this, "User not found!", Toast.LENGTH_SHORT).show();
+        }
 
-        // Sign out button functionality
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        // Sign out button clears session and navigates back to login
         btnSignOut.setOnClickListener(v -> {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.clear();  // Clear user data when signing out
-            editor.apply();
-            startActivity(new Intent(ProfileActivity.this, SignUpActivity.class));
+            CurrentUser.clear();  // Clear global session
+            startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
             finish();
         });
 
-        // Icon functionality for navigation
-        ImageView iconDashboard = findViewById(R.id.iconDashboard);
-        ImageView iconPortfolio = findViewById(R.id.iconPortfolio);
-        ImageView iconTask = findViewById(R.id.iconTask);
-        ImageView iconProfile = findViewById(R.id.iconProfile);
-
-        iconDashboard.setOnClickListener(v -> {
+        // Bottom navigation
+        findViewById(R.id.iconDashboard).setOnClickListener(v -> {
             startActivity(new Intent(ProfileActivity.this, MainActivity.class));
             finish();
         });
 
-        iconPortfolio.setOnClickListener(v -> {
+        findViewById(R.id.iconPortfolio).setOnClickListener(v -> {
             startActivity(new Intent(ProfileActivity.this, PortfolioActivity.class));
             finish();
         });
 
-        iconTask.setOnClickListener(v -> {
+        findViewById(R.id.iconTask).setOnClickListener(v -> {
             startActivity(new Intent(ProfileActivity.this, ProjectActivity.class));
             finish();
-        });
-
-        // Profile icon is already in ProfileActivity, so no action needed.
-        iconProfile.setOnClickListener(v -> {
-            // Already in Profile Activity
         });
     }
 }

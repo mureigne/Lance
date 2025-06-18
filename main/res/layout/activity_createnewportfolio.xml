@@ -9,39 +9,115 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Portfolio Title -->
+        <!-- Template Selection -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Template"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingTop="8dp" />
+
+        <Spinner
+            android:id="@+id/spinnerTemplates"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:spinnerMode="dropdown" />
+
+        <ImageView
+            android:id="@+id/imageViewTemplatePreview"
+            android:layout_width="match_parent"
+            android:layout_height="216dp"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
+
+
         <EditText
             android:id="@+id/editTextTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="72dp"
             android:hint="Portfolio Title"
+            android:inputType="text"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:inputType="text" />
+            android:textStyle="bold" />
 
-        <!-- User Name -->
-        <EditText
-            android:id="@+id/editTextName"
+        <!-- Name with checkbox -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:hint="Your Name" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp">
 
-        <!-- Contact Info -->
-        <EditText
-            android:id="@+id/editTextContact"
+            <CheckBox
+                android:id="@+id/checkBoxIncludeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textViewName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name: "
+                android:textSize="16sp"
+                android:paddingStart="8dp" />
+        </LinearLayout>
+
+        <!-- Email with checkbox -->
+
+        <!-- Contact with checkbox -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="67dp"
-            android:hint="Email or Contact Info"
-            android:inputType="textEmailAddress" />
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp">
+
+            <CheckBox
+                android:id="@+id/checkBoxIncludeEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textViewEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:text="Email: "
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp">
+
+            <CheckBox
+                android:id="@+id/checkBoxIncludeContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textViewContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact: "
+                android:textSize="16sp"
+                android:paddingStart="8dp" />
+        </LinearLayout>
 
         <!-- Summary -->
         <EditText
             android:id="@+id/editTextSummary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="69dp"
             android:hint="Short Summary or Objective"
-            android:minLines="3"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:minLines="3" />
 
         <!-- Work Samples Header -->
         <TextView
@@ -74,5 +150,111 @@
             android:layout_height="wrap_content"
             android:text="Generate PDF Portfolio"
             android:layout_marginTop="24dp" />
+
     </LinearLayout>
 </ScrollView>
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:padding="16dp">-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layoutRoot"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+
+<!--        &lt;!&ndash; Template Selection &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Choose Template"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="16sp"-->
+<!--            android:paddingTop="8dp" />-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/spinnerTemplates"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="38dp"-->
+<!--            android:spinnerMode="dropdown" />-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imageViewTemplatePreview"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="216dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:adjustViewBounds="true"-->
+<!--            android:scaleType="fitCenter" />-->
+
+<!--        &lt;!&ndash; Portfolio Title &ndash;&gt;-->
+<!--        <EditText-->
+<!--            android:id="@+id/editTextTitle"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="72dp"-->
+<!--            android:hint="Portfolio Title"-->
+<!--            android:inputType="text"-->
+<!--            android:textSize="18sp"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        &lt;!&ndash; User Name &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/textViewName"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Name: "-->
+<!--            android:textSize="16sp"-->
+<!--            android:paddingTop="8dp"-->
+<!--            android:paddingBottom="4dp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textViewContact"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Contact: "-->
+<!--            android:textSize="16sp"-->
+<!--            android:paddingBottom="8dp" />-->
+
+<!--        &lt;!&ndash; Summary &ndash;&gt;-->
+<!--        <EditText-->
+<!--            android:id="@+id/editTextSummary"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="69dp"-->
+<!--            android:hint="Short Summary or Objective"-->
+<!--            android:inputType="textMultiLine"-->
+<!--            android:minLines="3" />-->
+
+<!--        &lt;!&ndash; Work Samples Header &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Work Samples"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="16sp"-->
+<!--            android:paddingTop="16dp" />-->
+
+<!--        &lt;!&ndash; Container for dynamic work sample entries &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:id="@+id/layoutWorkSamples"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical" />-->
+
+<!--        &lt;!&ndash; Add Work Sample Button &ndash;&gt;-->
+<!--        <Button-->
+<!--            android:id="@+id/buttonAddSample"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Add Work Sample"-->
+<!--            android:layout_marginTop="8dp" />-->
+
+<!--        &lt;!&ndash; Generate PDF Button &ndash;&gt;-->
+<!--        <Button-->
+<!--            android:id="@+id/buttonGeneratePDF"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Generate PDF Portfolio"-->
+<!--            android:layout_marginTop="24dp" />-->
+
+<!--    </LinearLayout>-->
+<!--</ScrollView>-->

@@ -8,6 +8,7 @@ import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     ImageView iconDashboard, iconPortfolio, iconAdd, iconTask, iconProfile;
+    Button buttonCreatePortfolio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         iconAdd = findViewById(R.id.iconAdd);
         iconTask = findViewById(R.id.iconTask);
         iconProfile = findViewById(R.id.iconProfile);
+        buttonCreatePortfolio = findViewById(R.id.btnCreatePortfolio);
 
         // Navigate to current (Main) Activity
         iconDashboard.setOnClickListener(v -> {
@@ -45,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
         iconProfile.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+        });
+
+        buttonCreatePortfolio.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CreateNewPortfolioActivity.class);
+            startActivity(intent);
         });
 
         iconAdd.setOnClickListener(v -> showAddProjectPopup());
