@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lance">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -8,8 +9,8 @@
         android:label="LanceApp"
         android:theme="@style/Theme.Lance">
 
-        <!-- SignUpActivity is the launch activity -->
-        <activity android:name=".SignUpActivity"
+        <!-- SplashActivity is now the launcher -->
+        <activity android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,18 +18,15 @@
             </intent-filter>
         </activity>
 
-        <!-- LoginActivity -->
+        <!-- DashboardActivity is the main dashboard -->
+        <activity android:name=".DashboardActivity" />
+
+        <!-- Auth & Other Screens -->
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
-
-        <!-- MainActivity (Dashboard) -->
-        <activity android:name=".MainActivity" />
-
-        <!-- ProfileActivity -->
         <activity android:name=".ProfileActivity" />
-
         <activity android:name=".PortfolioActivity" />
         <activity android:name=".ProjectActivity" />
-
 
     </application>
 
