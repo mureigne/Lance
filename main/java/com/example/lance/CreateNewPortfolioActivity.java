@@ -7,10 +7,11 @@ import android.graphics.*;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.*;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -26,7 +27,7 @@ public class CreateNewPortfolioActivity extends AppCompatActivity {
 
     private EditText editTextTitle, editTextSummary;
     private TextView textViewName, textViewEmail, textViewContact;
-    private CheckBox checkBoxName, checkBoxEmail, checkBoxContact, checkBoxUseTemplate;
+    private CheckBox checkBoxIncludeName, checkBoxIncludeEmail, checkBoxIncludeContact, checkBoxUseTemplate;
     private Spinner spinnerTemplates;
     private ImageView imageViewTemplatePreview;
     private LinearLayout layoutWorkSamples;
@@ -35,9 +36,9 @@ public class CreateNewPortfolioActivity extends AppCompatActivity {
     private ArrayList<View> workSampleViews = new ArrayList<>();
     private HashMap<View, Uri> imageUris = new HashMap<>();
     private View currentImageRequestView;
-    private MyDataBaseHelper dbHelper;
 
     private String savedName, savedEmail, savedContact;
+    private Database dbHelper;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -45,106 +46,105 @@ public class CreateNewPortfolioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createnewportfolio);
 
+        dbHelper = new Database(this);
+
+        // Initialize UI components
         editTextTitle = findViewById(R.id.editTextTitle);
         editTextSummary = findViewById(R.id.editTextSummary);
         textViewName = findViewById(R.id.textViewName);
         textViewEmail = findViewById(R.id.textViewEmail);
         textViewContact = findViewById(R.id.textViewContact);
-        checkBoxName = findViewById(R.id.checkBoxIncludeName);
-        checkBoxEmail = findViewById(R.id.checkBoxIncludeEmail);
-        checkBoxContact = findViewById(R.id.checkBoxIncludeContact);
-
-        layoutWorkSamples = findViewById(R.id.layoutWorkSamples);
+        checkBoxIncludeName = findViewById(R.id.checkBoxIncludeName);
+        checkBoxIncludeEmail = findViewById(R.id.checkBoxIncludeEmail);
+        checkBoxIncludeContact = findViewById(R.id.checkBoxIncludeContact);
+        checkBoxUseTemplate = findViewById(R.id.checkBoxUseTemplate);
         spinnerTemplates = findViewById(R.id.spinnerTemplates);
         imageViewTemplatePreview = findViewById(R.id.imageViewTemplatePreview);
+        layoutWorkSamples = findViewById(R.id.layoutWorkSamples);
 
         Button buttonAddSample = findViewById(R.id.buttonAddSample);
         Button buttonGeneratePDF = findViewById(R.id.buttonGeneratePDF);
 
-        dbHelper = new MyDataBaseHelper(this);
+        // Load current user info
+        dbHelper = new Database(this);
         String currentUsername = CurrentUser.getUsername();
-
         if (currentUsername == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
         }
+        loadUserInfo(currentUsername);
 
-        Cursor cursor = dbHelper.getUserByUsername(currentUsername);
-        if (cursor.moveToFirst()) {
-            savedName = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-            savedEmail = cursor.getString(cursor.getColumnIndexOrThrow("email"));
-            savedContact = cursor.getString(cursor.getColumnIndexOrThrow("phone"));
+        // Template spinner setup
+        setupTemplateSpinner();
 
-            textViewName.setText("Name: " + savedName);
-            textViewEmail.setText("Email: " + savedEmail);
-            textViewContact.setText("Contact: " + savedContact);
-        }
-
-        cursor.close();
-
-        String[] templateNames = {"Template 1", "Template 2", "Template 3"};
-        final int[] templateResIds = {R.drawable.template1, R.drawable.template2, R.drawable.template3};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, templateNames);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTemplates.setAdapter(adapter);
-        spinnerTemplates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedTemplateResId = templateResIds[position];
-                imageViewTemplatePreview.setImageResource(selectedTemplateResId);
-            }
-
-            @Override public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-        imageViewTemplatePreview.setImageResource(selectedTemplateResId);
+        // Add first work sample section
         addWorkSample();
 
+        // Button listeners
         buttonAddSample.setOnClickListener(v -> addWorkSample());
         buttonGeneratePDF.setOnClickListener(v -> generatePDFPortfolio());
     }
 
+    private void loadUserInfo(String username) {
+        Cursor cursor = dbHelper.getUserByUsername(username);
+        if (cursor.moveToFirst()) {
+            savedName = cursor.getString(cursor.getColumnIndexOrThrow(Database.COLUMN_NAME));
+            savedEmail = cursor.getString(cursor.getColumnIndexOrThrow(Database.COLUMN_EMAIL));
+            savedContact = cursor.getString(cursor.getColumnIndexOrThrow(Database.COLUMN_PHONE));
+            textViewName.setText("Name: " + savedName);
+            textViewEmail.setText("Email: " + savedEmail);
+            textViewContact.setText("Contact: " + savedContact);
+        }
+        cursor.close();
+    }
+
+    private void setupTemplateSpinner() {
+        String[] names = {"Template 1", "Template 2", "Template 3"};
+        int[] resIds = {R.drawable.template1, R.drawable.template2, R.drawable.template3};
+
+        spinnerTemplates.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, names));
+        spinnerTemplates.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                selectedTemplateResId = resIds[pos];
+                imageViewTemplatePreview.setImageResource(selectedTemplateResId);
+            }
+            @Override public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        imageViewTemplatePreview.setImageResource(selectedTemplateResId);
+    }
+
     private void addWorkSample() {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View sampleView = inflater.inflate(R.layout.item_work_sample, layoutWorkSamples, false);
-
-        ImageView imageViewSample = sampleView.findViewById(R.id.imageViewSample);
-        Button buttonSelectImage = sampleView.findViewById(R.id.buttonSelectImage);
-        CheckBox checkBoxInclude = new CheckBox(this);
-        checkBoxInclude.setText("Include in PDF");
-
-        ((LinearLayout) sampleView).addView(checkBoxInclude, 0);
-
-        buttonSelectImage.setOnClickListener(v -> {
-            currentImageRequestView = sampleView;
+        View sample = LayoutInflater.from(this)
+                .inflate(R.layout.item_work_sample, layoutWorkSamples, false);
+        Button btn = sample.findViewById(R.id.buttonSelectImage);
+        btn.setOnClickListener(v -> {
+            currentImageRequestView = sample;
             pickImageFromGallery();
         });
-
-        layoutWorkSamples.addView(sampleView);
-        workSampleViews.add(sampleView);
+        layoutWorkSamples.addView(sample);
+        workSampleViews.add(sample);
     }
 
     private void pickImageFromGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+        startActivityForResult(
+                new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI),
+                PICK_IMAGE_REQUEST
+        );
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri imageUri = data.getData();
-
+    protected void onActivityResult(int req, int res, @Nullable Intent data) {
+        super.onActivityResult(req, res, data);
+        if (req == PICK_IMAGE_REQUEST && res == RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
             if (currentImageRequestView != null) {
-                ImageView imageView = currentImageRequestView.findViewById(R.id.imageViewSample);
+                ImageView iv = currentImageRequestView.findViewById(R.id.imageViewSample);
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                    imageView.setImageBitmap(bitmap);
-                    imageUris.put(currentImageRequestView, imageUri);
+                    iv.setImageBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(), uri));
+                    imageUris.put(currentImageRequestView, uri);
                 } catch (IOException e) {
-                    e.printStackTrace();
                     Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -152,28 +152,25 @@ public class CreateNewPortfolioActivity extends AppCompatActivity {
     }
 
     private void generatePDFPortfolio() {
-        PdfDocument pdfDocument = new PdfDocument();
+        PdfDocument pdf = new PdfDocument();
         Paint paint = new Paint();
-        int pageWidth = 595, pageHeight = 842;
-        int y = 50;
+        int w = 595, h = 842, y = 50;
 
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create();
-        PdfDocument.Page page = pdfDocument.startPage(pageInfo);
+        PdfDocument.PageInfo pi = new PdfDocument.PageInfo.Builder(w, h, 1).create();
+        PdfDocument.Page page = pdf.startPage(pi);
         Canvas canvas = page.getCanvas();
 
         if (checkBoxUseTemplate.isChecked()) {
-            Bitmap templateBitmap = BitmapFactory.decodeResource(getResources(), selectedTemplateResId);
-            Bitmap scaled = Bitmap.createScaledBitmap(templateBitmap, pageWidth, pageHeight, true);
-            canvas.drawBitmap(scaled, 0, 0, null);
+            Bitmap bg = BitmapFactory.decodeResource(getResources(), selectedTemplateResId);
+            canvas.drawBitmap(Bitmap.createScaledBitmap(bg, w, h, true), 0, 0, null);
         }
 
         paint.setTextSize(16);
         paint.setColor(Color.BLACK);
-
         canvas.drawText("Title: " + editTextTitle.getText().toString(), 30, y += 30, paint);
-        if (checkBoxName.isChecked()) canvas.drawText("Name: " + savedName, 30, y += 25, paint);
-        if (checkBoxEmail.isChecked()) canvas.drawText("Email: " + savedEmail, 30, y += 25, paint);
-        if (checkBoxContact.isChecked()) canvas.drawText("Contact: " + savedContact, 30, y += 25, paint);
+        if (checkBoxIncludeName.isChecked()) canvas.drawText("Name: " + savedName, 30, y += 25, paint);
+        if (checkBoxIncludeEmail.isChecked()) canvas.drawText("Email: " + savedEmail, 30, y += 25, paint);
+        if (checkBoxIncludeContact.isChecked()) canvas.drawText("Contact: " + savedContact, 30, y += 25, paint);
 
         canvas.drawText("Summary:", 30, y += 30, paint);
         for (String line : editTextSummary.getText().toString().split("\n")) {
@@ -181,56 +178,46 @@ public class CreateNewPortfolioActivity extends AppCompatActivity {
         }
 
         canvas.drawText("Work Samples:", 30, y += 40, paint);
-
-        for (View sample : workSampleViews) {
-            CheckBox includeCheck = (CheckBox) ((LinearLayout) sample).getChildAt(0);
-            if (!includeCheck.isChecked()) continue;
-
-            EditText sampleTitle = sample.findViewById(R.id.editTextSampleTitle);
-            EditText sampleDesc = sample.findViewById(R.id.editTextSampleDescription);
-            Uri imageUri = imageUris.get(sample);
-
-            canvas.drawText("Title: " + sampleTitle.getText().toString(), 60, y += 30, paint);
-            canvas.drawText("Description: " + sampleDesc.getText().toString(), 60, y += 30, paint);
-
-            if (imageUri != null) {
+        for (View s : workSampleViews) {
+            CheckBox cb = s.findViewById(R.id.checkBoxInclude);
+            if (!cb.isChecked()) continue;
+            EditText et = s.findViewById(R.id.editTextSampleTitle);
+            EditText ed = s.findViewById(R.id.editTextSampleDescription);
+            Uri uri = imageUris.get(s);
+            canvas.drawText("Title: " + et.getText(), 60, y += 30, paint);
+            canvas.drawText("Description: " + ed.getText(), 60, y += 30, paint);
+            if (uri != null) {
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                    Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 250, 250, true);
-                    canvas.drawBitmap(scaled, 60, y += 10, paint);
+                    Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    canvas.drawBitmap(Bitmap.createScaledBitmap(bmp, 250, 250, true), 60, y += 10, paint);
                     y += 260;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } catch (IOException ignored) {}
             }
-
-            if (y > pageHeight - 100) {
-                pdfDocument.finishPage(page);
-                pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pdfDocument.getPages().size() + 1).create();
-                page = pdfDocument.startPage(pageInfo);
+            if (y > h - 100) {
+                pdf.finishPage(page);
+                pi = new PdfDocument.PageInfo.Builder(w, h, pdf.getPages().size() + 1).create();
+                page = pdf.startPage(pi);
                 canvas = page.getCanvas();
                 y = 50;
             }
         }
+        pdf.finishPage(page);
 
-        pdfDocument.finishPage(page);
-
-        File pdfFile = new File(getExternalFilesDir(null), "Portfolio.pdf");
-        try {
-            pdfDocument.writeTo(new FileOutputStream(pdfFile));
-            Toast.makeText(this, "PDF saved: " + pdfFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        File out = new File(getExternalFilesDir(null), "Portfolio.pdf");
+        try (FileOutputStream fos = new FileOutputStream(out)) {
+            pdf.writeTo(fos);
+            Toast.makeText(this, "Saved: " + out.getAbsolutePath(), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Toast.makeText(this, "Error saving PDF", Toast.LENGTH_SHORT).show();
         }
+        pdf.close();
 
-        pdfDocument.close();
-
-        Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".provider", pdfFile);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, "application/pdf");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".provider", out);
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setDataAndType(uri, "application/pdf");
+        i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         try {
-            startActivity(intent);
+            startActivity(i);
         } catch (Exception e) {
             Toast.makeText(this, "No PDF viewer found.", Toast.LENGTH_SHORT).show();
         }
